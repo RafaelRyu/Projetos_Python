@@ -1,0 +1,9 @@
+larg = float(input(' qual a largura de sua parede ?: '))
+altu = float(input(' Qual o altura de sua parede ?: '))
+preco = float(input(' Qual o preço do litro de tinta utilizado ?: '))
+a = larg*altu
+t = a/2
+p = t*preco
+print('Sua parede tem a dimensão de {}x{} e uma área de {}m².'.format(larg, altu, a))
+print('Será nescessário {:.3f} litro(s) de tinta. O custo total será de {:.2f} real(is)' .format(t, p))
+
