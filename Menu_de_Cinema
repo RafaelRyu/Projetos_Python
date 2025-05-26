@@ -1,0 +1,30 @@
+menu = {
+    "pizza":8.00,
+    "refrigerante":10.00,
+    "pipoca":8.00,
+    "m&m":6.00,
+    "pirulito":5.00,
+    "bala":2.00
+}
+
+cart = []
+print("MENU")
+for key, value in menu.items():
+    print(f"{key:15}: ${value:.2f}")
+
+while True:
+    food = input("Digite uma comida do menu(pressione S para sair): ").lower()
+    while food != "pizza" and food != "refrigerante" and food != "pipoca" and food != "m&m" and food != "pirulito" and food !="bala" and food != "s":
+     print("Essa opção não está disponível, tente uma opção no nosso menu !")
+     food = input("Digite uma comida do menu(pressione S para sair): ").lower()
+    if food == "s":
+        break
+    elif menu.get(food) is not None:
+        cart.append(food)
+
+print(cart)
+
+total = 0
+for food in cart:
+    total += menu.get(food)
+print(f"Seu total é: R${total}")
