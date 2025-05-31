@@ -1,0 +1,19 @@
+trocar = True
+lista = []
+quant = int(input("Quantos números você deseja organizar em ordem crescente ?"))
+
+print("Agora digite seus números")
+for i in range(quant):
+    num = float(input(f"Digite seu {i+1}º número: "))
+    lista.append(num)
+
+while trocar:
+    trocar = False
+    for i in range(len(lista)-1):
+        if lista[i] > lista[i+1]:
+            lista[i], lista [i+1] = lista[i+1], lista[i]
+            trocar = True
+
+print("Sua lista organizada de forma crescente:")
+print(lista)
+
