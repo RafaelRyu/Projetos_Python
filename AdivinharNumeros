@@ -1,0 +1,31 @@
+import random
+
+menor_num = int(input("Digite o número inicial do intervalo: "))
+maior_num = int(input("Digite o número final do intervalo: "))
+is_running = True
+
+answer = random.randint(menor_num, maior_num)
+
+tentativas = 0
+
+while is_running:
+    escolha = input("Escolha um número: ")
+    if escolha.isdigit():
+        escolha = int(escolha)
+        if menor_num > escolha or escolha > maior_num:
+            print("Essa opção é inválida, por favor selecione um valor dentro do limite escolhido !")
+            tentativas +=1
+        else:
+            if escolha > answer:
+                print("Sua tentativa foi muita alta, tente novamente !")
+                tentativas += 1
+            elif escolha < answer:
+                print("Sua tentativa foi muito baixa, tente novamente !")
+                tentativas += 1
+            else:
+                break
+    else:
+        print("Essa opção é inválida, por favor selecione um valor dentro do limite escolhido !")
+        tentativas += 1
+print("Você acertou !!!")
+print(f"Você usou {tentativas} tentativas")
