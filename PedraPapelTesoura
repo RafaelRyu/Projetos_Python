@@ -1,0 +1,66 @@
+import random
+decisao = "N"
+while decisao == "N":
+    jogador_pontos=0
+    computador_pontos=0
+
+    print("----Pedra, Papel, Tesoura----")
+    print("------Você VS Máquina--------")
+    partidas = input("Digite o número de partidas que você deseja jogar: ")
+
+    while not partidas.isdecimal():
+        partidas = input("Essa opção é inválida, tente um número inteiro positivo: ")
+    partidas = int(partidas)
+    contador = 0
+
+    while contador < partidas:
+        contador += 1
+        options = ("pedra", "papel", "tesoura")
+        print("Suas opções são:\n- pedra\n- papel\n- tesoura")
+        jogador = input("Digite uma das opções: ").lower()
+
+        while jogador not in options:
+            print("Essa opção é inválida, tente uma das seguintes opções:\n- Pedra\n- Papel\n- Tesoura")
+            jogador = input("Digite uma das opções: ").lower()
+
+        computador = random.choice(options)
+
+        print(f"Você escolheu: {jogador}")
+        print(f"O computador escolheu: {computador}")
+
+        if jogador == computador:
+            print("Houve um empate !")
+        elif jogador == "papel" and computador == "pedra":
+            print("Você ganhou !")
+            jogador_pontos +=1
+        elif jogador == "pedra" and computador == "tesoura":
+            print("Você ganhou !")
+            jogador_pontos += 1
+        elif jogador == "tesoura" and computador == "papel":
+            print("Você ganhou !")
+            jogador_pontos += 1
+        elif jogador == "pedra" and computador == "papel":
+            print("O computador ganhou :(")
+            computador_pontos += 1
+        elif jogador == "tesoura" and computador == "pedra":
+            print("O computador ganhou :(")
+            computador_pontos += 1
+        elif jogador == "papel" and computador == "tesoura":
+            print("O computador ganhou :(")
+            computador_pontos += 1
+        print("")
+
+    if jogador_pontos == computador_pontos:
+        print("Você e o Computador empataram")
+    elif jogador_pontos > computador_pontos:
+        print("Parabéns, você ganhou do computador !!!")
+    else:
+        print("Que pena, o Computador ganhou :(")
+    print("")
+
+    decisao = input("Pressione N para começar um novo jogo ou S para sair: ").upper()
+    while decisao != "N" and decisao != "S":
+        decisao = input("Valor inválido, tente N para começar um novo jogo ou S para sair: ").upper()
+        
+
+print("Você saiu do jogo, volte sempre !")
