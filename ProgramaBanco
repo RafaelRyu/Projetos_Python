@@ -1,0 +1,59 @@
+
+def main():
+ def mostrar_saldo(saldo):
+  print(f"Seu saldo é: R${saldo:,.2f}")
+
+ def depositar():
+  quantiaDeposito = float(input("Qual o valor do seu depósito ?: "))
+  while quantiaDeposito <= 0:
+   print("Valor não suportado, por favor, digite um valor maior do que zero")
+   quantiaDeposito = float(input("Qual o valor do seu depósito ?: "))
+  return quantiaDeposito
+
+ def retirar(saldo):
+  quantiaRetirada = float(input("Qual o valor que deseja retirar ?: "))
+
+  while quantiaRetirada <= 0 or quantiaRetirada > saldo:
+   print("Valor não aceito, por favor verifique se o seu valor é maior que zero e menor ou igual ao seu saldo")
+   print(f"Seu saldo é: R${saldo:,.2f}")
+   quantiaRetirada = float(input("Qual o valor que deseja retirar ?: "))
+
+  return quantiaRetirada
+
+ saldo = 0
+
+ programa_ativado = True
+
+ while programa_ativado:
+  print()
+  print("*-------Banco do Henrique--------*")
+  print("1 - Mostrar saldo da conta;\n"
+        "2 - Depositar dinheiro na conta;\n"
+        "3 - Retirar dinheiro da conta\n"
+        "4 - Encerrar sessão")
+  escolha = input("Escolha uma das opções:")
+
+  match escolha:
+   case "1":
+    mostrar_saldo(saldo)
+   case "2":
+    quantia = depositar()
+    saldo += quantia
+    print(f"O valor de R${quantia} foi adicionado a sua conta")
+    print(f"Seu saldo atual é : R${saldo:,.2f}")
+
+   case "3":
+    quantia = retirar(saldo)
+    saldo -= quantia
+    print(f"Você retirou o valor de R${quantia} de sua conta")
+    print(f"Seu saldo atual é R${saldo:,.2f}")
+
+   case "4":
+    programa_ativado = False
+   case _:
+    print("Opção inválida, por favor tente uma opção do menu")
+
+ print("Você saiu do Banco do Henrique, volte sempre !")
+
+if __name__ == "__main__":
+  main()
