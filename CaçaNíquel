@@ -1,0 +1,129 @@
+import random
+def opcaoMenu():
+    print("*------Cassino do Henrique------*")
+    print("1 - Jogar;\n2 - Depositar;\n3 - Sair")
+    escolha = input("Escolha uma das opções")
+    try:
+     escolha = int(escolha)
+     while escolha != 1 and escolha != 2 and escolha != 3:
+        print("Por favor, escolha uma das opções do menu")
+        escolha = int(input("Escolha uma das opções"))
+     return escolha
+    except ValueError:
+     print("Por favor, insira uma das opções do menu")
+     return escolha
+
+def sortear():
+    itens = ("⚽","⚾","🏀","🏐","🏈","🎱")
+    #Compreensão de lista para escolher três itens
+    itensSorteados = [random.choice(itens) for item in range(3)]
+
+    return itensSorteados
+
+
+def calcularPagamento(resultado, aposta):
+    if resultado[0] == resultado[1] == resultado[2]:
+        if resultado[0] == "⚽":
+            aposta *= 10
+        elif resultado[0] == "⚾":
+            aposta *= 20
+        elif resultado[0] == "🏀":
+            aposta *= 30
+        elif resultado[0] == "🏐":
+            aposta *= 40
+        elif resultado[0] == "🏈":
+            aposta *= 50
+        elif resultado[0] == "🎱":
+            aposta *= 60
+        else:
+            print("Um erro inesperado ocorreu")
+            aposta = 0
+        print(f"Você ganhou R${aposta:,.2f} !")
+
+    elif resultado[0] == resultado[1] or resultado[0] == resultado[2] or resultado[1] == resultado[2]:
+        if resultado.count("⚽") == 2:
+            aposta = 20
+        elif resultado.count("⚾") == 2:
+            aposta = 30
+        elif resultado.count("🏀") == 2:
+            aposta = 40
+        elif resultado.count("🏐") == 2:
+            aposta = 50
+        elif resultado.count("🏈") == 2:
+            aposta = 60
+        elif resultado.count("🎱") == 2:
+            aposta = 100
+        else :
+            print("Um erro inesperado ocorreu !")
+            aposta +=0
+
+        print(f"Você ganhou R${aposta:,.2f} !")
+
+    else:
+     print("Você perdeu :(")
+
+     aposta = 0
+
+    return aposta
+
+#código Main
+
+saldo = 0
+programaRodando = True
+
+while programaRodando:
+    opcao = opcaoMenu()
+
+    match opcao:
+        case 1:
+            if saldo <= 0:
+                print("Seu saldo deve ser maior do que zero para poder jogar, digite 2 para efetuar um depósito")
+                acessoPermitido = False
+            else:
+                acessoPermitido = True
+        case 2:
+            deposito = input("Digite o valor do seu depósito: ")
+
+            acessoPermitido = True
+            try:
+                deposito = float(deposito)
+                if deposito <= 0:
+                    print("Por favor, insira um valor maior do que zero")
+                    acessoPermitido = False
+                else:
+                    print(f"Seu depósito de R${deposito} foi concluído com sucesso !")
+                    saldo += deposito
+                    acessoPermitido = False
+
+            except ValueError:
+             print("Por favor, digite uma das opções do menu")
+             acessoPermitido = False
+
+        case 3:
+         programaRodando = False
+         acessoPermitido = False
+
+        case _:
+            programaRodando = True
+            acessoPermitido = False
+
+
+    if acessoPermitido:
+
+
+         aposta = float(input("Qual valor você deseja apostar ?: "))
+         while aposta <= 0:
+             print("Por favor, insira um valor maior do que zero: ")
+             aposta = float(input("Qual valor você deseja apostar ?: "))
+
+         saldo -= aposta
+
+         resultado = sortear()
+         print(" | ".join(resultado)) #Mostra o resultado
+
+         pagamento = calcularPagamento(resultado, aposta)
+         saldo += pagamento
+         print(f"Seu saldo é R${saldo:,.2f}")
+
+print("Você saiu do programa, volte sempre")
+
