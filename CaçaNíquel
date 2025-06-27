@@ -2,11 +2,11 @@ import random
 def opcaoMenu():
     print("*------Cassino do Henrique------*")
     print("1 - Jogar;\n2 - Depositar;\n3 - Sair")
-    escolha = input("Escolha uma das opções")
+    escolha = input("Escolha uma das opções (1-3): ")
     try:
      escolha = int(escolha)
      while escolha != 1 and escolha != 2 and escolha != 3:
-        print("Por favor, escolha uma das opções do menu")
+        print("Por favor, escolha uma das opções do menu (1-3): ")
         escolha = int(input("Escolha uma das opções"))
      return escolha
     except ValueError:
@@ -66,64 +66,73 @@ def calcularPagamento(resultado, aposta):
 
     return aposta
 
-#código Main
+def main():
 
-saldo = 0
-programaRodando = True
+    saldo = 0
+    programaRodando = True
 
-while programaRodando:
-    opcao = opcaoMenu()
+    while programaRodando:
+        opcao = opcaoMenu()
 
-    match opcao:
-        case 1:
-            if saldo <= 0:
-                print("Seu saldo deve ser maior do que zero para poder jogar, digite 2 para efetuar um depósito")
-                acessoPermitido = False
-            else:
-                acessoPermitido = True
-        case 2:
-            deposito = input("Digite o valor do seu depósito: ")
-
-            acessoPermitido = True
-            try:
-                deposito = float(deposito)
-                if deposito <= 0:
-                    print("Por favor, insira um valor maior do que zero")
+        match opcao:
+            case 1:
+                if saldo <= 0:
+                    print("Seu saldo deve ser maior do que zero para poder jogar, digite 2 para efetuar um depósito")
                     acessoPermitido = False
                 else:
-                    print(f"Seu depósito de R${deposito} foi concluído com sucesso !")
-                    saldo += deposito
-                    acessoPermitido = False
+                    acessoPermitido = True
+            case 2:
+                deposito = input("Digite o valor do seu depósito: ")
 
-            except ValueError:
-             print("Por favor, digite uma das opções do menu")
+                acessoPermitido = True
+                try:
+                    deposito = float(deposito)
+                    if deposito <= 0:
+                        print("Por favor, insira um valor maior do que zero")
+                        acessoPermitido = False
+                    else:
+                        print(f"Seu depósito de R${deposito} foi concluído com sucesso !")
+                        saldo += deposito
+                        acessoPermitido = False
+
+                except ValueError:
+                 print("Por favor, digite uma das opções do menu")
+                 acessoPermitido = False
+
+            case 3:
+             programaRodando = False
              acessoPermitido = False
 
-        case 3:
-         programaRodando = False
-         acessoPermitido = False
-
-        case _:
-            programaRodando = True
-            acessoPermitido = False
+            case _:
+                programaRodando = True
+                acessoPermitido = False
 
 
-    if acessoPermitido:
+        if acessoPermitido:
 
 
-         aposta = float(input("Qual valor você deseja apostar ?: "))
-         while aposta <= 0:
-             print("Por favor, insira um valor maior do que zero: ")
-             aposta = float(input("Qual valor você deseja apostar ?: "))
+             aposta = input("Qual valor você deseja apostar ?: ")
+             try:
+                 aposta = float(aposta)
+                 if aposta <= saldo:
+                     while aposta <= 0:
+                         print("Por favor, insira um valor maior do que zero: ")
+                         aposta = float(input("Qual valor você deseja apostar ?: "))
 
-         saldo -= aposta
+                     saldo -= aposta
 
-         resultado = sortear()
-         print(" | ".join(resultado)) #Mostra o resultado
+                     resultado = sortear()
+                     print(" | ".join(resultado)) #Mostra o resultado
 
-         pagamento = calcularPagamento(resultado, aposta)
-         saldo += pagamento
-         print(f"Seu saldo é R${saldo:,.2f}")
+                     pagamento = calcularPagamento(resultado, aposta)
+                     saldo += pagamento
+                     print(f"Seu saldo é R${saldo:,.2f}")
+                 else:
+                     print("Sua aposta deve ser menor ou igual ao seu saldo !")
+             except ValueError:
+                 print("Por favor, digite um valor válido !")
 
-print("Você saiu do programa, volte sempre")
+    print("Você saiu do programa, volte sempre")
 
+if __name__ == "__main__":
+    main()
