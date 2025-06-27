@@ -1,0 +1,73 @@
+import string
+import random
+
+def criptografar(texto_original, characters, key):
+    texto_criptografado = ""
+    for caracter in texto_original:
+        index = characters.index(caracter)
+        texto_criptografado += key[index]
+    return texto_criptografado
+
+def transformar(lista):
+    listaConvertida = ""
+    for caracter in lista:
+        listaConvertida += caracter
+    return listaConvertida
+
+def descriptografar(texto_inserido_criptografado, characters, key_descriptografia):
+    key = list(key_descriptografia)
+    texto_descriptografado = ""
+    for character in texto_inserido_criptografado:
+        index = key.index(character)
+        texto_descriptografado += characters[index]
+    return texto_descriptografado
+
+
+def main():
+    programaRodando = True
+
+    while programaRodando:
+        print("*-------Programa de Criptografia-------*")
+        print("1 - Criptografar;\n2 - Descriptografar;\n3 - Sair;")
+        print("*--------------------------------------*")
+        escolha = input("Escolha uma das opções: ")
+        try:
+            escolha = int(escolha)
+            if 1 <= escolha <= 3:
+                characters = string.ascii_letters + string.digits + string.punctuation + " " #Possui 95 caracteres
+                match escolha:
+                 case 1:
+
+                    key = list(characters)
+                    random.shuffle(key)
+
+                    texto_original = input("Digite uma mensagem para ser encriptografada (não são aceitos letras com acento ou ç):")
+                    texto_criptografado = criptografar(texto_original, characters, key)
+
+
+                    print(f"Seu texto original é:{texto_original}")
+                    print(f"Seu texto criptografado é:\n{texto_criptografado}")
+                    print(f"Sua chave é:\n{transformar(key)}")
+
+                 case 2:
+                    texto_inserido_criptografado = input("Digite seu texto criptografado (não são aceitos letras com acento ou ç):")
+                    key_descriptogrfia = input("insira a chave para descriptografia:")
+
+                    if len(key_descriptogrfia) != 95:
+                        print("Por favor, insira uma chave válida")
+
+                    else:
+                        print(f"Sua mensagem descriptografada é:\n{descriptografar(texto_inserido_criptografado, characters, key_descriptogrfia)}")
+                 case _:
+                        programaRodando = False
+
+            else:
+                print("Por favor, insira uma das opcões do menu !")
+
+        except ValueError:
+            print("Por favor, insira uma opção válida do menu")
+
+    print("Você saiu do programa, volte sempre !")
+
+if __name__ == "__main__":
+    main()
