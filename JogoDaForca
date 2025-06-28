@@ -1,0 +1,100 @@
+import random
+
+palavras = ["china","brasil","egito","alemanha","inglaterra","portugal","noruega","espanha","san marino"]
+
+boneco_forca = { 0 : ("   ",
+                      "   ",
+                      "   "),
+                 1 : (" O ",
+                      "   ",
+                      "   "),
+                 2 : (" O ",
+                      " | ",
+                      "   "),
+                 3 : (" O ",
+                      "/| ",
+                      "   "),
+                 4 : (" O ",
+                      "/|\\",
+                      "   "),
+                 5 : (" O ",
+                      "/|\\",
+                      "/  "),
+                 6 : (" O ",
+                      "/|\\",
+                      "/ \\")}
+
+def mostrar_boneco(erros):
+    print("__\n | ")
+    for linha in boneco_forca[erros]:
+        print("".join(linha))
+
+def mostrar_letras():
+    pass
+
+def mostrar_resposta():
+    pass
+
+def main():
+
+    programaRodando = True
+
+
+
+    while programaRodando:
+
+
+        resposta = random.choice(palavras)
+        dica = ["_" for _ in resposta]
+        erros = 0
+        letras_usadas = ""
+
+        print("*************")
+        print("Jogo da Forca")
+        print("*************")
+        while erros < 6 and "_" in dica:
+            tentativa = input("Escolha uma letra: ").lower()
+
+            if tentativa in letras_usadas:
+                print(f"Essa letra já foi utilizada, por favor tente uma letra diferente de ({" - ".join(letras_usadas)})")
+
+            else:
+                if tentativa in resposta:
+                    for num in range(len(resposta)):
+                        if tentativa == resposta[num]:
+                            dica[num] = tentativa
+
+                    mostrar_boneco(erros)
+                    letras_usadas += tentativa
+
+                    print(dica)
+                else:
+                    erros += 1
+                    mostrar_boneco(erros)
+                    print(dica)
+                    letras_usadas += tentativa
+
+        if "_" not in dica:
+            print("*********************************")
+            print("Você ganhou !")
+            print("*********************************")
+        else:
+            print("*********************************")
+            print("Você perdeu !")
+            print(f"A palavra correta era {resposta}")
+            print("*********************************")
+
+        escolha = input("Deseja jogar novamente (S/N) ?:").upper()
+        while escolha != "S" and escolha != "N":
+            print("Por favor, insira S para Sim ou N para Não: ")
+            escolha = input("Deseja jogar novamente (S/N) ?:").upper()
+
+        if escolha == "N":
+            programaRodando = False
+        else:
+            programaRodando = True
+
+    print("Você saiu do programa, volte sempre !")
+
+if __name__ == "__main__":
+    main()
