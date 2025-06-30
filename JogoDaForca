@@ -1,6 +1,6 @@
 import random
 
-palavras = ["china","brasil","egito","alemanha","inglaterra","portugal","noruega","espanha","san marino"]
+palavras = ["china","brasil","egito","alemanha","inglaterra","portugal","noruega","espanha", "cuba", "equador", "camboja"]
 
 boneco_forca = { 0 : ("   ",
                       "   ",
@@ -57,6 +57,12 @@ def main():
 
             if tentativa in letras_usadas:
                 print(f"Essa letra já foi utilizada, por favor tente uma letra diferente de ({" - ".join(letras_usadas)})")
+
+            elif len(tentativa) > 1:
+                print("Por favor, digite apenas uma letra !")
+
+            elif not tentativa.isalpha():
+                print("Caractere não aceito, por favor tente apenas letras do alfabeto sem acentos !")
 
             else:
                 if tentativa in resposta:
