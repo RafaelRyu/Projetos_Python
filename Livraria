@@ -1,0 +1,99 @@
+class Livro:
+    def __init__(self, titulo, autor, paginas, preco, quant):
+        self.titulo = titulo
+        self.autor = autor
+        self.paginas = paginas
+        self.preco = preco
+        self.quant = quant
+
+class Venda:
+    def __init__(self, titulo ,quant, valor):
+        self.titulo = titulo
+        self.quant = quant
+        self.valor = valor
+
+
+
+class Estoque:
+
+    estoque_livros = []
+    historico_vendas = []
+
+    def __init__(self):
+        pass
+
+    def adicionar(self, livro):
+        self.estoque_livros.append(livro)
+
+
+    def consultar_estoque(self):
+        return self.estoque_livros
+
+
+
+    def consultar_autor(self, autor_escolhido):
+        livros_autor = []
+        for livro in self.estoque_livros:
+            if autor_escolhido == livro.autor:
+                livros_autor.append(livro)
+        return livros_autor
+
+    def vender(self, livro_vendido, quant_vendida):
+        for livro in self.estoque_livros:
+            if livro_vendido == livro.titulo:
+                if quant_vendida < livro.quant:
+                    livro.quant -= quant_vendida
+                    venda = Venda(livro_vendido, quant_vendida, livro.preco)
+                    estoque.historico_vendas.append(venda)
+                    return f"A venda foi bem sucedida"
+                else:
+                    return f"Desculpe, mas a quantidade do livro {livro.titulo} excede o estoque"
+            else:
+                return f"Desculpe, mas o livro não existe no estoque"
+
+    def consultar_vendas(self):
+        return estoque.historico_vendas
+
+
+programa_Rodando = True
+estoque = Estoque()
+
+while programa_Rodando:
+
+    escolha = input("Digite a opção: ")
+
+    match escolha:
+
+        case "1":
+            titulo_livro = input("Digite o título do livro: ")
+            autor_livro = input("Digite o nome do autor: ")
+            paginas_livro = int(input("Digite o número de páginas: "))
+            preco_livro = float(input("Digite o preço do livro: "))
+            quant_livro = int(input("Digite a quantidade de livros: "))
+
+            livro_adicionado = Livro(titulo_livro, autor_livro, paginas_livro, preco_livro, quant_livro)
+            estoque.adicionar(livro_adicionado)
+
+        case "2":
+             for livro in estoque.consultar_estoque():
+                print(f"{livro.quant} cópias de : {livro.titulo} de {livro.autor} com {livro.paginas} páginas por R${livro.preco}")
+
+
+        case "3":
+            autor_escolhido = input("Digite o nome do autor")
+            livros_autor_escolhido = estoque.consultar_autor(autor_escolhido)
+            print(f"O autor {autor_escolhido} possui os livros: ")
+            for livro in livros_autor_escolhido:
+                print(f"{livro.titulo}")
+
+
+
+
+        case "4":
+            livro_vendido = input("Qual o título do livro ?: ")
+            quant_vendida = int(input("Quantos livros forão vendidos ?:"))
+            estoque.vender(livro_vendido, quant_vendida)
+
+        case "5":
+            for venda in estoque.consultar_vendas():
+                print(f"venda.")
