@@ -13,14 +13,13 @@ class Venda:
         self.valor = valor
 
 
-
 class Estoque:
 
-    estoque_livros = []
-    historico_vendas = []
 
     def __init__(self):
-        pass
+        estoque_livros = []
+        historico_vendas = []
+        
 
     def adicionar(self, livro):
         self.estoque_livros.append(livro)
@@ -44,22 +43,24 @@ class Estoque:
                 if quant_vendida < livro.quant:
                     livro.quant -= quant_vendida
                     venda = Venda(livro_vendido, quant_vendida, livro.preco)
-                    estoque.historico_vendas.append(venda)
+                    self.historico_vendas.append(venda)
                     return f"A venda foi bem sucedida"
                 else:
                     return f"Desculpe, mas a quantidade do livro {livro.titulo} excede o estoque"
-            else:
-                return f"Desculpe, mas o livro não existe no estoque"
+
+        return f"Desculpe, mas o livro não existe no estoque"
 
     def consultar_vendas(self):
-        return estoque.historico_vendas
+        return self.historico_vendas
 
 
 programa_Rodando = True
 estoque = Estoque()
 
 while programa_Rodando:
-
+    print("*Livraria do Henrique*")
+    print("---------Menu---------")
+    print("1 - Adicionar Livro\n2 - Consultar Estoque\n3 - Consultar Autor\n4 - Efetuar Venda\n5 - Consultar Vendas\n6 - Sair")
     escolha = input("Digite a opção: ")
 
     match escolha:
@@ -67,12 +68,16 @@ while programa_Rodando:
         case "1":
             titulo_livro = input("Digite o título do livro: ")
             autor_livro = input("Digite o nome do autor: ")
-            paginas_livro = int(input("Digite o número de páginas: "))
-            preco_livro = float(input("Digite o preço do livro: "))
-            quant_livro = int(input("Digite a quantidade de livros: "))
+            try:
+                paginas_livro = int(input("Digite o número de páginas: "))
+                preco_livro = float(input("Digite o preço do livro: "))
+                quant_livro = int(input("Digite a quantidade de livros: "))
 
-            livro_adicionado = Livro(titulo_livro, autor_livro, paginas_livro, preco_livro, quant_livro)
-            estoque.adicionar(livro_adicionado)
+                livro_adicionado = Livro(titulo_livro, autor_livro, paginas_livro, preco_livro, quant_livro)
+                estoque.adicionar(livro_adicionado)
+
+            except ValueError:
+                print("Erro, por favor, verifique se o número de páginas, o preço e a quantidade estão corretas")
 
         case "2":
              for livro in estoque.consultar_estoque():
@@ -87,13 +92,21 @@ while programa_Rodando:
                 print(f"{livro.titulo}")
 
 
-
-
         case "4":
             livro_vendido = input("Qual o título do livro ?: ")
-            quant_vendida = int(input("Quantos livros forão vendidos ?:"))
-            estoque.vender(livro_vendido, quant_vendida)
+            try:
+                quant_vendida = int(input("Quantos livros forão vendidos ?:"))
+                print(estoque.vender(livro_vendido, quant_vendida))
+
+            except ValueError:
+                print("Erro, por favor verifique se a quantidade está correta")
 
         case "5":
             for venda in estoque.consultar_vendas():
-                print(f"venda.")
+                print(f"{venda}\n")
+
+        case "6":
+            programa_Rodando = False
+
+        case _:
+            print("Opção inválida, por favor selecione uma das opções do menu")
