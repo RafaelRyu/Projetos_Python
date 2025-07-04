@@ -7,19 +7,22 @@ class Livro:
         self.quant = quant
 
 class Venda:
-    def __init__(self, titulo ,quant, valor):
+    def __init__(self, titulo ,quant, valor_unitario, valor_total):
         self.titulo = titulo
         self.quant = quant
-        self.valor = valor
+        self.valor_unitario = valor_unitario
+        self.valor_total = valor_total
+
 
 
 class Estoque:
 
 
+
     def __init__(self):
-        estoque_livros = []
-        historico_vendas = []
-        
+        self.estoque_livros = []
+        self.historico_vendas = []
+
 
     def adicionar(self, livro):
         self.estoque_livros.append(livro)
@@ -38,17 +41,17 @@ class Estoque:
         return livros_autor
 
     def vender(self, livro_vendido, quant_vendida):
-        for livro in self.estoque_livros:
-            if livro_vendido == livro.titulo:
-                if quant_vendida < livro.quant:
+
+        if livro in self.estoque_livros:
+                if quant_vendida <= livro.quant:
                     livro.quant -= quant_vendida
-                    venda = Venda(livro_vendido, quant_vendida, livro.preco)
+                    venda = Venda(livro_vendido, quant_vendida, livro.preco, livro.preco*quant_vendida)
                     self.historico_vendas.append(venda)
                     return f"A venda foi bem sucedida"
                 else:
                     return f"Desculpe, mas a quantidade do livro {livro.titulo} excede o estoque"
-
-        return f"Desculpe, mas o livro não existe no estoque"
+        else:
+                return f"Desculpe, mas o livro não existe no estoque"
 
     def consultar_vendas(self):
         return self.historico_vendas
@@ -95,7 +98,7 @@ while programa_Rodando:
         case "4":
             livro_vendido = input("Qual o título do livro ?: ")
             try:
-                quant_vendida = int(input("Quantos livros forão vendidos ?:"))
+                quant_vendida = int(input("Quantos livros foram vendidos ?:"))
                 print(estoque.vender(livro_vendido, quant_vendida))
 
             except ValueError:
@@ -103,7 +106,7 @@ while programa_Rodando:
 
         case "5":
             for venda in estoque.consultar_vendas():
-                print(f"{venda}\n")
+                print(f"{venda.quant} cópias de {venda.titulo} foram vendidas por {venda.valor_unitario}, totalizando R${venda.valor_total:.2f}\n")
 
         case "6":
             programa_Rodando = False
