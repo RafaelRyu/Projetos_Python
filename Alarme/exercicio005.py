@@ -6,6 +6,7 @@ import pygame
 
 def definir_alarme(tempo_alarme):
         print(f"O alarme foi definido para {tempo_alarme}")
+        #Para mudar o som do alarme, basta importar um arquivo de som (.mp3) e substituir o valor da variável arquivo_som pelo caminho do arquivo de som desejado
         arquivo_som = "C:\\Users\\Furukawa\\PycharmProjects\\PythonProject001\\Alarme\\Area Zero (Cinematic Arrangement) - Pokémon Scarlet _ Violet(MP3_70K).mp3"
 
         programa_Rodando = True
